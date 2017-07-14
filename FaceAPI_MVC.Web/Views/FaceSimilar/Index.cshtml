@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Find Face Similar";
+}
+
+<div ng-controller="faceSimilarCtrl">
+    <h3>{{Title}}</h3>
+    <div class="loadmore">
+        <div ng-show="loaderMoreupl" ng-class="result">
+            <img src="~/Content/ng-loader.gif" /> {{uplMessage}}
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <table style="width:100%">
+        <tr>
+            <th><h4>Select Multiple Candidate Face</h4></th>
+            <th><h4>Select Query Face</h4></th>
+        </tr>
+        <tr>
+            <td style="width:60%" valign="top">
+                <form novalidate name="f1">
+                    <input type="file" name="file" accept="image/*" multiple onchange="angular.element(this).scope().selectCandidateFileforUpload(this.files)" required />
+                </form>
+                <div class="clearfix"></div>
+                <hr />
+                <h4>Face Collection {{resultFaceMessage}}</h4>
+                <input type="submit" value="Reload Faces" ng-click="GetCandidateFile()" class="btn btn-success" />
+                <div class="clearfix"></div>
+                <div class="loadmore">
+                    <div ng-show="loaderMore" ng-class="result">
+                        <img src="~/Content/ng-loader.gif" /> {{faceMessage}}
+                    </div>
+                </div>
+                <hr />
+                <div ng-repeat="item in UploadedFiles" class="pull-left">
+                    <img ng-src="{{item.FilePath}}" width="100" class="media-list" />
+                </div>
+                <div ng-hide="UploadedFiles.length">No face found!!</div>
+            </td>
+            <td style="width:40%" valign="top">
+                <form novalidate name="f2">
+                    <input type="file" name="file" accept="image/*" onchange="angular.element(this).scope().selectFileforFindSimilar(this.files)" required />
+                </form>
+                <div class="clearfix"></div>
+                <div class="loadmore">
+                    <div ng-show="loaderMorefacefinder" ng-class="result">
+                        <img src="~/Content/ng-loader.gif" /> {{facefinderMessage}}
+                    </div>
+                </div>
+                <hr />
+                <h4>Result</h4>
+                <p>{{resultMessage}}</p>
+                <div class="clearfix"></div>
+                <div class="facePreview_thumb_big">
+                    <img ng-src="{{QueryFace}}" width="200" />
+                </div>
+                <hr />
+                <div ng-repeat="item in SimilarFace" class="pull-left">
+                    <img ng-src="{{item.FilePath}}" width="100" class="media-list" />
+                </div>
+                <div ng-hide="SimilarFace.length">No similar face found!!</div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+@section NgScript{
+    <script src="~/ScriptsNg/FaceSimilarCtrl.js"></script>
+}
